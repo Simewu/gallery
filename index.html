@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<meta name='description' content='A portfolio of Simeon.'>
+	<meta name='author' content='Simeon Wuthier'>
+	<title>Simeon · Wuthier</title>
+	<link rel='icon' href='https://simewu.com/favicon.svg'>
+	<link href='https://simewu.com/lib/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='https://simewu.com/style.css' type='text/css' rel='stylesheet'>
+	<style>
+		.gallery {
+			width: 100%;
+		}
+
+
+		.gallery-image {
+			height: auto;
+			max-width: 100%;
+			flex-grow: 1;
+			flex: 0 0 auto;
+		}
+
+		.scroll-wrapper {
+			overflow-x: scroll;
+			overflow-y: hidden;
+			width: 100%;
+		}
+
+		.horizontal-scroll-container {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.horizontal-scroll-container img {
+			height: 240px;
+			display: flex;
+			vertical-align: top;
+			margin: 0 3px;
+			transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+			gap: 10px;
+			padding: 3px;
+		}
+
+		.img-fluid {
+			height: auto;
+			max-height: 100%;
+			object-fit: contain;
+		}
+
+		.horizontal-scroll-container .hoverable:hover {
+			transform: scale(1.02);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			cursor: pointer;
+		}
+
+		#sliderContainer {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: space-evenly;
+			padding: 5px 10%;
+		}
+
+		#timelineXLabel,
+		#timelineYLabel {
+			white-space: nowrap;
+			flex: 0 0 auto;
+			margin-bottom: 1px;
+		}
+
+		.form-range {
+			flex-grow: 1;
+			margin: 0 20px;
+		}
+
+		@media (max-width: 768px) {
+
+			#timelineXLabel,
+			#timelineYLabel {
+				font-size: smaller;
+			}
+
+			.form-range {
+				margin: 0 10px;
+			}
+
+			#sliderContainer {
+				padding: 0 5%;
+			}
+
+			#timelineXLabel,
+			#timelineYLabel {
+				margin-top: 2px;
+				margin-bottom: 3px;
+			}
+		}
+
+		.badge {
+			background-color: rgba(77, 131, 137, 0.1);
+			color: white;
+			margin-right: 10px;
+			border: 1px solid rgba(111, 152, 157, 0.75);
+		}
+
+		.modal-title {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body class='bg-color'>
+	<header class='container-main navbar navbar-expand-md navbar-light bg-color sticky-top border-bottom-dim'>
+		<div class='container'>
+			<a class='navbar-brand text-center fs-5 col-md-2 mr-5 border-0 bg-transparent text-color-bold'
+				style='font-family: "Megrim", cursive'>Simeon Wuthier</a>
+			<button class='navbar-toggler text-color' type='button' data-bs-toggle='collapse'
+				data-bs-target='#navbarContent' aria-controls='navbarContent' aria-expanded='false'
+				aria-label='Toggle navigation'>
+				<span class='navbar-toggler-icon' data-feather='menu'></span>
+			</button>
+			<div class='collapse navbar-collapse' id='navbarContent'>
+				<ul class='navbar-nav me-auto'>
+					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold' href='/'>Home</a>
+					</li>
+					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
+							href='projects'>Projects</a></li>
+					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
+							href='publications'>Publications</a></li>
+					<li class='nav-item dropdown ms-4'>
+						<a class='nav-link dropdown-toggle nav-link-uline fs-6 text-color-bold' href='#' role='button'
+							data-bs-toggle='dropdown' aria-expanded='false'>
+							<b>Portfolio</b>
+						</a>
+						<div id='portfolioDropdown' class='dropdown-menu p-0 bg-color'
+							aria-labelledby='portfolioDropdown'>
+							<a class='dropdown-item text-color custom-dropdown-item' href='gallery'>Artwork</a>
+							<a class='dropdown-item text-color custom-dropdown-item' href='resume'>Resume</a>
+						</div>
+					</li>
+					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
+							href='contact'>Contact</a></li>
+				</ul>
+				<div class='form-check form-switch float-end'>
+					<label class='form-check-label text-color' for='nightModeToggle'>
+						<i id='dayNightIcon' data-feather='sun'></i>
+					</label>
+					<input class='form-check-input' type='checkbox' id='nightModeToggle'
+						onchange='toggleDayNightIcon()'>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div id='container' class='container-main d-flex flex-wrap bg-color fade' style='height: 500px; overflow-y: auto'>
+		<div class='modal fade' id='webpageModal' aria-labelledby='webpageModalLabel' aria-hidden='true'>
+			<div class='modal-dialog modal-xl'>
+				<div class='modal-content bg-color-dimmer modal-xl'>
+					<div class='modal-header'>
+						<h5 class='modal-title text-color' id='webpageModalLabel'></h5>
+						<button type='button' class='btn-close bg-color-inv' data-bs-dismiss='modal'
+							aria-label='Close'></button>
+					</div>
+					<div class='modal-body p-2'></div>
+				</div>
+			</div>
+		</div>
+		<main class='col-md-12 ms-sm-auto col-lg-12 pt-0 px-md-4 bg-color'>
+			<div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3'>
+				<div class='container text-color'>
+					<div class='gallery' id='gallery'></div>
+				</div>
+			</div>
+		</main>
+	</div>
+	<div id='sliderContainer' class='container-main d-flex align-items-center bg-color'>
+		<label id='timelineXLabel' for='timelineX' class='form-label text-color'>X</label>
+		<input id='timelineX' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
+			oninput='sliderChangeX(true)'>
+		<input id='timelineY' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
+			oninput='sliderChangeY(true)'>
+		<label id='timelineYLabel' for='timelineY' class='form-label text-color'>Y</label>
+	</div>
+	<footer class='container-main footer text-color-dim bg-color-dim'>Copyright © 2023 Simeon Wuthier.</footer>
+	<script src='https://simewu.com/lib/js/bootstrap.bundle.min.js'></script>
+	<script src='https://simewu.com/lib/js/feather.min.js'></script>
+	<script src='https://simewu.com/lib/js/jquery.min.js'></script>
+	<script type='text/javascript' src='https://simewu.com/script.js'></script>
+
+	<script>
+		// Automatic redirect while the page is still under construction
+		// window.location.href = 'https://www.instagram.com/simewu/';
+		// window.location = 'https://www.instagram.com/simewu/';
+
+
+
+		let images = {
+			'2020-July-20-Dream-Jellyfish': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg'],
+			'2019-June-22-Finite-Perception': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
+			'2020-December-25-Rippling-Melody': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'],
+			'2021-March-3-Owl-Opulent-Oculars': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
+			'2019-September-12-Dreamer-Perception': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '6.jpg', '7.jpg', '8.jpg'],
+			'2019-February-22-Starry-Sight': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'],
+			'2021-April-26-Celestial-Currents': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'],
+			'2019-January-4-Whispering-Meadow': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'],
+			'2022-March-13-Luminous-Lane': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'],
+			'2019-July-12-Drifting-Underneath': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
+			'2022-April-11-Twilight-Tsunami': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg'],
+			'2022-January-1-Cosmic-Swirl': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
+			'2022-April-5-Between-Stars-and-Ground': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'],
+			'2022-June-1-Fragmented-Walls': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
+			'2019-April-30-Cosmic-Curiosity': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
+			'2020-February-24-Kaleidoscope-Lake': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'],
+			'2020-April-09-Speed-Doodles-Showcase': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg'],
+			'2022-April-10-Tsunami-Duo': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
+			'2019-June-16-Nautical-Drifters': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
+			'2018-December-26-Whirling-Woods': ['1.jpg', '2.jpg', '3.jpg'],
+			'2019-September-25-Tangled-Realms': ['1.jpg', '2.jpg', '3.jpg', '4.jpg'],
+			'2020-April-09-Pen-Sketches-Showcase': ['1.jpg', '2.jpg', '3.jpeg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg'],
+			'2020-January-15-Bacteriophage-Space-Age': ['1.jpg', '2.jpg', '3.jpg', '4.jpg'],
+			'2017-December-21-Digital-Artwork-Showcase': ['pool.png', '2034630.png', '2210120.png', '2272777.png', '2275984.png', '2686765.png', '2703938.png', '2710618.png', '2712052.png', '2844287.png', '2850495.png', '2852734.png', '2855766.png', '2860715.png', '2867263.png', '3019662.png', '3081060.png', '3456988.png', '3495690.png', '3503749.png', '3511209.png', '3531250.png', '3705388.png', '3728677.png', '3730477.png', '3735523.png', '3776344.png', '3951976.png'],
+			// '2015-May-10-Upside-Down-World': ['1.jpg', '2.jpeg'],
+			// '2018-January-26-Eyescape': ['1.jpg', '2.jpg'],
+			// '2018-November-3-Chromatic-Vortex': ['1.jpg', '2.jpg'],
+			// '2019-August-6-Doodle-Dilemma': ['1.jpg', '2.jpg', '3.jpg'],
+			// '2019-June-13-Solitary-Summer': ['1.jpg', '2.jpg'],
+			// '2019-June-17-Impasto-Jelly': ['1.jpg', '2.jpg'],
+			// '2020-January-27-Tidal-Twirl': ['1.jpg', '2.jpg', '3.jpg'],
+			// '2020-January-28-Fractured-Vision': ['1.jpg', '2.jpg'],
+			// '2020-July-28-Prisma-Turtle': ['1.jpg', '2.jpg', '3.jpg'],
+			'Miscellaneous': ['2017-November-23-Mystique-Abyss.jpg', '2018-December-22-Seuss-Tree.jpg', '2020-April-27-Mystic-Raven.jpg', '1.jpg', '20181015_183251.jpg', '20190613_033329.jpg'],
+		};
+
+		// Function to load images into the gallery
+		function loadGallery(galleryId, images) {
+			var gallery = document.getElementById(galleryId);
+			var html = '';
+			// Loop through the images
+			for (let dir in images) {
+				let directory = 'img/gallery_thumbnail';
+				let directoryFullRes = 'img/gallery';
+				if (dir != 'gallery') {
+					directory += '/' + dir;
+					directoryFullRes += '/' + dir;
+				}
+
+				// Extract the date and name from the directory name
+				let artworkName = dir.split('-').slice(3).join(' ') || '';
+				let artworkDateSplit = dir.split('-').slice(0, 3);
+				let artworkDate = '';
+				if (artworkDateSplit.length == 3) {
+					artworkDate = artworkDateSplit[1] + ' ' + artworkDateSplit[2] + ', ' + artworkDateSplit[0];
+				}
+
+				html += `<div class="scroll-wrapper"><div class="horizontal-scroll-container">`;
+				for (let fileName in images[dir]) {
+					let imagePath = directory + '/' + images[dir][fileName];
+					html += `<img class="gallery-image p-0 rounded hoverable" src="${imagePath}" alt="${images[dir][fileName]}" oncontextmenu="return false;" onclick="showModal('${dir}', '${directoryFullRes}', '${artworkName}', '${artworkDate}')">`;
+				}
+				html += '</div></div>';
+			}
+			gallery.innerHTML = html;
+
+			// Trigger a color refresh
+			let nightModeToggle = document.getElementById('nightModeToggle');
+			toggleNightMode(nightModeToggle.checked);
+		}
+
+		// Display the modal with the image
+		function showModal(index, directory, title, date) {
+			// Draw a scroll-wrapper for the full resolution versions of the images
+
+			let imageHeight = window.innerHeight - 200;
+			let modal = document.getElementById('webpageModal');
+			let modalTitle = document.getElementById('webpageModalLabel');
+			let modalBody = document.querySelector('.modal-body');
+			modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
+			modalBody.innerHTML = '';
+
+			// Delay the modal to allow the image to load
+			setTimeout(function (modalBody, index, directory, title, date, imageHeight) {
+				let html = '';
+				html += '<div class="scroll-wrapper" style="height: ' + imageHeight + 'px;"><div class="horizontal-scroll-container">';
+				console.log(index)
+				for (let fileName in images[index]) {
+					let imagePath = directory + '/' + images[index][fileName];
+					console.log('imagePath', imagePath)
+					html += `<img class="img-fluid rounded" src="${imagePath}" alt="${images[index][fileName]}" style="height: ${imageHeight}px;">`;
+				}
+				html += '</div></div>';
+				modalBody.innerHTML = html;
+			}, 300, modalBody, index, directory, title, date, imageHeight);
+
+			$('#webpageModal').modal('show');
+		}
+
+
+		let sliderSmoothingXIntervalThread = null;
+
+		// Upon changing the slider, scroll all the horizontal scroll containers to the same percentage
+		function sliderChangeX(triggeredByDom = false) {
+			let value = document.getElementById('timelineX').value;
+			let smoothX = 30;
+			let scrollWrappers = document.getElementsByClassName('scroll-wrapper'), maxDist = 0;
+			for (let i = 0; i < scrollWrappers.length; i++) {
+				let targetScrollLeft = value * (scrollWrappers[i].scrollWidth - scrollWrappers[i].clientWidth) / 1000;
+				if (!triggeredByDom) {
+					scrollWrappers[i].scrollLeft = ((scrollWrappers[i].scrollLeft * smoothX) + targetScrollLeft) / (smoothX + 1)
+				}
+				maxDist = Math.max(maxDist, Math.abs(scrollWrappers[i].scrollLeft - targetScrollLeft))
+			}
+			if (maxDist >= 50) {
+				if (sliderSmoothingXIntervalThread == null) {
+					sliderSmoothingXIntervalThread = setInterval(sliderChangeX, 1000 / 60);
+				}
+			} else {
+				clearInterval(sliderSmoothingXIntervalThread);
+				sliderSmoothingXIntervalThread = null;
+			}
+		}
+
+		let sliderSmoothingYIntervalThread = null;
+		let lastKnownScrollTop = 0;
+
+		// Function to detect user scroll and disable smooth scrolling
+		function handleUserScroll() {
+			const container = document.getElementById('container');
+			if (Math.abs(container.scrollTop - lastKnownScrollTop) > 10) {
+				clearInterval(sliderSmoothingYIntervalThread);
+				sliderSmoothingYIntervalThread = null;
+			}
+		}
+
+		// Attach the event listener to detect user scroll
+		document.getElementById('container').addEventListener('scroll', handleUserScroll);
+
+		// Smooth scrolling function
+		function sliderChangeY(triggeredByDom = false) {
+			let value = document.getElementById('timelineY').value;
+			let container = document.getElementById('container');
+			let smoothY = 40;
+			let maxScrollTop = container.scrollHeight - container.clientHeight;
+			let targetScrollTop = value * maxScrollTop / 1000;
+			// Only update the scroll position if this change was not triggered by DOM (user scroll)
+			if (!triggeredByDom) {
+				container.scrollTop = ((container.scrollTop * smoothY) + targetScrollTop) / (smoothY + 1);
+			}
+			lastKnownScrollTop = container.scrollTop; // Update the last known position for smooth scrolling
+			let currentScrollTop = container.scrollTop;
+			let maxDist = Math.abs(currentScrollTop - targetScrollTop);
+			// Continue the interval while the max distance is greater than a threshold
+			if (maxDist >= 50) {
+				if (sliderSmoothingYIntervalThread === null) {
+					sliderSmoothingYIntervalThread = setInterval(() => sliderChangeY(false), 1000 / 60);
+				}
+			} else {
+				clearInterval(sliderSmoothingYIntervalThread);
+				sliderSmoothingYIntervalThread = null;
+				isUserScrolling = false; // Reset the flag as the user is no longer scrolling
+			}
+		}
+
+		// Call loadGallery on DOMContentLoaded
+		document.addEventListener('DOMContentLoaded', function () {
+			loadGallery('gallery', images);
+			adjustIframeHeight();
+		});
+
+		// Throttle function to limit the calls to adjustIframeHeight
+		function throttle(callback, delay) {
+			let last;
+			let timer;
+			return function () {
+				const now = new Date().getTime();
+				if (last && now < last + delay) {
+					clearTimeout(timer);
+					timer = setTimeout(function () {
+						last = now;
+						callback();
+					}, delay);
+				} else {
+					last = now;
+					callback();
+				}
+			};
+		}
+
+		// Adjust the iframe height to fit the window
+		function adjustIframeHeight() {
+			const headerHeight = document.querySelector('header').offsetHeight;
+			const sliderHeight = document.querySelector('#sliderContainer').offsetHeight;
+			const footerHeight = document.querySelector('footer').offsetHeight;
+			const iframeHeight = window.innerHeight - headerHeight - sliderHeight - footerHeight;
+			document.getElementById('container').style.height = iframeHeight + 'px';
+		}
+
+		// Throttled version of the adjustIframeHeight function
+		const throttledAdjustIframeHeight = throttle(adjustIframeHeight, 100);
+
+		window.addEventListener('resize', throttledAdjustIframeHeight);
+		window.addEventListener('scroll', throttledAdjustIframeHeight);
+
+		// // Adjust the iframe height to fit the window
+		// function adjustIframeHeight() {
+		// 	const headerHeight = document.querySelector('header').offsetHeight;
+		// 	const sliderHeight = document.querySelector('#sliderContainer').offsetHeight;
+		// 	const footerHeight = document.querySelector('footer').offsetHeight;
+		// 	const iframeHeight = window.innerHeight - headerHeight - sliderHeight - footerHeight;
+		// 	document.getElementById('container').style.height = iframeHeight + 'px';
+		// }
+		// window.addEventListener('resize', adjustIframeHeight);
+
+	</script>
+
+</body>
+
+</html>
