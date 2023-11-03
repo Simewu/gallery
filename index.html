@@ -200,7 +200,6 @@
 			var newPath = window.location.pathname.slice(0, -1);
 			window.history.pushState({}, "", newPath);
 		}
-
 		let images = {
 			'2020-July-20-Dream-Jellyfish': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg'],
 			'2019-June-22-Finite-Perception': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
@@ -273,78 +272,80 @@
 		}
 
 		// Display the modal with the image
-function showModal(index, directory, directoryFullRes, title, date) {
-  let imageHeight = window.innerHeight - 200;
-  let modal = document.getElementById('webpageModal');
-  let modalTitle = document.getElementById('webpageModalLabel');
-  let modalBody = document.querySelector('.modal-body');
-  modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
-  modalBody.innerHTML = '';
-  let imageContainer = document.createElement('div');
-  imageContainer.className = 'scroll-wrapper';
-  imageContainer.style.height = imageHeight + 'px';
-  let imageScrollContainer = document.createElement('div');
-  imageScrollContainer.className = 'horizontal-scroll-container';
-  imageContainer.appendChild(imageScrollContainer);
-  modalBody.appendChild(imageContainer);
+		function showModal(index, directory, directoryFullRes, title, date) {
+			let imageHeight = window.innerHeight - 200;
+			let modal = document.getElementById('webpageModal');
+			let modalTitle = document.getElementById('webpageModalLabel');
+			let modalBody = document.querySelector('.modal-body');
+			modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
+			modalBody.innerHTML = '';
+			let imageContainer = document.createElement('div');
+			imageContainer.className = 'scroll-wrapper';
+			imageContainer.style.height = imageHeight + 'px';
+			let imageScrollContainer = document.createElement('div');
+			imageScrollContainer.className = 'horizontal-scroll-container';
+			imageContainer.appendChild(imageScrollContainer);
+			modalBody.appendChild(imageContainer);
+			// Preload and display thumbnail images first
+			preloadThumbnailImages(index, directory, images[index], imageScrollContainer, imageHeight, directoryFullRes);
+			$('#webpageModal').modal('show');
+			// Start preloading full-resolution images after the modal is shown
+			stopPreloadingFullResImages = false;
+			preloadFullResImages(index, directory, directoryFullRes, images[index], imageScrollContainer, imageHeight, 0);
+		}
 
-  // Preload and display thumbnail images first
-  preloadThumbnailImages(index, directory, images[index], imageScrollContainer, imageHeight, directoryFullRes);
-  
-  $('#webpageModal').modal('show');
-}
+		// Function to preload and display thumbnail images first
+		function preloadThumbnailImages(index, directory, imageFiles, container, imageHeight, directoryFullRes) {
+			let loadedThumbnailCount = 0;
 
-// Function to preload and display thumbnail images first
-function preloadThumbnailImages(index, directory, imageFiles, container, imageHeight, directoryFullRes) {
-  let loadedThumbnailCount = 0;
+			for (let currentIndex = 0; currentIndex < imageFiles.length; currentIndex++) {
+				let fileName = imageFiles[currentIndex];
+				let thumbnailImagePath = directory + '/' + fileName;
+				let img = new Image();
+				img.onload = function () {
+					// Thumbnail image is loaded, add it to the container
+					let imgElement = document.createElement('img');
+					imgElement.className = 'img-fluid rounded';
+					imgElement.src = thumbnailImagePath;
+					imgElement.alt = fileName;
+					imgElement.style.height = imageHeight + 'px';
+					container.appendChild(imgElement);
 
-  for (let currentIndex = 0; currentIndex < imageFiles.length; currentIndex++) {
-    let fileName = imageFiles[currentIndex];
-    let thumbnailImagePath = directory + '/' + fileName;
-    let img = new Image();
-    img.onload = function () {
-      // Thumbnail image is loaded, add it to the container
-      let imgElement = document.createElement('img');
-      imgElement.className = 'img-fluid rounded';
-      imgElement.src = thumbnailImagePath;
-      imgElement.alt = fileName;
-      imgElement.style.height = imageHeight + 'px';
-      container.appendChild(imgElement);
+					loadedThumbnailCount++;
+				};
+				img.src = thumbnailImagePath; // Start loading the thumbnail image
+			}
+		}
 
-      loadedThumbnailCount++;
+		// Function to preload and display full-resolution images sequentially
+		function preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex) {
+			if (currentIndex === undefined || currentIndex >= imageFiles.length || stopPreloadingFullResImages) {
+				return; // All full-resolution images are preloaded
+			}
+			// console.log('Preloading ' + imageFiles[currentIndex]);
+			let fileName = imageFiles[currentIndex];
+			let fullResImagePath = directoryFullRes + '/' + fileName;
+			let img = new Image();
+			img.onload = function () {
+				// Full-resolution image is loaded, replace the corresponding thumbnail with it
+				let thumbnailImg = container.querySelector('[alt="' + fileName + '"]');
+				if (thumbnailImg) {
+					thumbnailImg.src = fullResImagePath;
+				}
+				// Preload the next full-resolution image
+				if (!stopPreloadingFullResImages) {
+					preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex + 1);
+				}
+			};
+			img.src = fullResImagePath; // Start loading the full-resolution image
+		}
 
-      // If all thumbnails are loaded, start loading full-resolution images
-      if (loadedThumbnailCount === imageFiles.length) {
-        preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, 0);
-      }
-    };
-    img.src = thumbnailImagePath; // Start loading the thumbnail image
-  }
-}
-
-// Function to preload and display full-resolution images sequentially
-function preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex) {
-  if (currentIndex >= imageFiles.length) {
-    return; // All full-resolution images are preloaded
-  }
-  let fileName = imageFiles[currentIndex];
-  let fullResImagePath = directoryFullRes + '/' + fileName;
-  let img = new Image();
-  img.onload = function () {
-    // Full-resolution image is loaded, replace the corresponding thumbnail with it
-    let thumbnailImg = container.querySelector('[alt="' + fileName + '"]');
-    if (thumbnailImg) {
-      thumbnailImg.src = fullResImagePath;
-    }
-
-    // Preload the next full-resolution image
-    preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex + 1);
-  };
-  img.src = fullResImagePath; // Start loading the full-resolution image
-}
-
-
-
+		// Event listener for modal close event
+		$('#webpageModal').on('hidden.bs.modal', function () {
+			// Stop preloading full-resolution images
+			stopPreloadingFullResImages = true;
+			// console.log('Stopped preloading')
+		});
 
 		let sliderSmoothingXIntervalThread = null;
 
