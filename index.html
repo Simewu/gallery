@@ -126,7 +126,8 @@
 			</button>
 			<div class='collapse navbar-collapse' id='navbarContent'>
 				<ul class='navbar-nav me-auto'>
-					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold' href='https://simewu.com'>Home</a>
+					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
+							href='https://simewu.com'>Home</a>
 					</li>
 					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
 							href='https://simewu.com/projects'>Projects</a></li>
@@ -139,8 +140,10 @@
 						</a>
 						<div id='portfolioDropdown' class='dropdown-menu p-0 bg-color'
 							aria-labelledby='portfolioDropdown'>
-							<a class='dropdown-item text-color custom-dropdown-item' href='https://simewu.com/gallery'>Artwork</a>
-							<a class='dropdown-item text-color custom-dropdown-item' href='https://simewu.com/resume'>Resume</a>
+							<a class='dropdown-item text-color custom-dropdown-item'
+								href='https://simewu.com/gallery'>Artwork</a>
+							<a class='dropdown-item text-color custom-dropdown-item'
+								href='https://simewu.com/resume'>Resume</a>
 						</div>
 					</li>
 					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
@@ -192,11 +195,11 @@
 	<script type='text/javascript' src='https://simewu.com/script.js'></script>
 
 	<script>
-		// Automatic redirect while the page is still under construction
-		// window.location.href = 'https://www.instagram.com/simewu/';
-		// window.location = 'https://www.instagram.com/simewu/';
-
-
+		// Remove the trailing slash from the URL
+		if (window.location.pathname.endsWith("/")) {
+			var newPath = window.location.pathname.slice(0, -1);
+			window.history.pushState({}, "", newPath);
+		}
 
 		let images = {
 			'2020-July-20-Dream-Jellyfish': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg'],
@@ -264,7 +267,6 @@
 				html += '</div></div>';
 			}
 			gallery.innerHTML = html;
-
 			// Trigger a color refresh
 			let nightModeToggle = document.getElementById('nightModeToggle');
 			toggleNightMode(nightModeToggle.checked);
@@ -272,8 +274,6 @@
 
 		// Display the modal with the image
 		function showModal(index, directory, title, date) {
-			// Draw a scroll-wrapper for the full resolution versions of the images
-
 			let imageHeight = window.innerHeight - 200;
 			let modal = document.getElementById('webpageModal');
 			let modalTitle = document.getElementById('webpageModalLabel');
@@ -324,7 +324,7 @@
 		}
 
 		let sliderSmoothingYIntervalThread = null;
-		let lastKnownScrollTop = 0;
+		let lastKnownScrollTop = 0; // Used to cancel the smooth scrolling when the user scrolls
 
 		// Function to detect user scroll and disable smooth scrolling
 		function handleUserScroll() {
@@ -349,10 +349,9 @@
 			if (!triggeredByDom) {
 				container.scrollTop = ((container.scrollTop * smoothY) + targetScrollTop) / (smoothY + 1);
 			}
-			lastKnownScrollTop = container.scrollTop; // Update the last known position for smooth scrolling
+			lastKnownScrollTop = container.scrollTop;
 			let currentScrollTop = container.scrollTop;
 			let maxDist = Math.abs(currentScrollTop - targetScrollTop);
-			// Continue the interval while the max distance is greater than a threshold
 			if (maxDist >= 50) {
 				if (sliderSmoothingYIntervalThread === null) {
 					sliderSmoothingYIntervalThread = setInterval(() => sliderChangeY(false), 1000 / 60);
@@ -400,20 +399,8 @@
 
 		// Throttled version of the adjustIframeHeight function
 		const throttledAdjustIframeHeight = throttle(adjustIframeHeight, 100);
-
 		window.addEventListener('resize', throttledAdjustIframeHeight);
 		window.addEventListener('scroll', throttledAdjustIframeHeight);
-
-		// // Adjust the iframe height to fit the window
-		// function adjustIframeHeight() {
-		// 	const headerHeight = document.querySelector('header').offsetHeight;
-		// 	const sliderHeight = document.querySelector('#sliderContainer').offsetHeight;
-		// 	const footerHeight = document.querySelector('footer').offsetHeight;
-		// 	const iframeHeight = window.innerHeight - headerHeight - sliderHeight - footerHeight;
-		// 	document.getElementById('container').style.height = iframeHeight + 'px';
-		// }
-		// window.addEventListener('resize', adjustIframeHeight);
-
 	</script>
 
 </body>
