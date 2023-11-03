@@ -6,12 +6,15 @@ import shutil
 global registeredImages
 registeredImages = {}
 
+
+
 sortingOrder = [
 	'2020-July-20-Dream-Jellyfish',
 	'2019-June-22-Finite-Perception',
 	'2020-December-25-Rippling-Melody',
 	'2021-March-3-Owl-Opulent-Oculars',
 	'2019-September-12-Dreamer-Perception',
+	'2017-December-21-Digital-Artwork-Showcase',
 	'2019-February-22-Starry-Sight',
 	'2021-April-26-Celestial-Currents',
 	'2019-January-4-Whispering-Meadow',
@@ -23,26 +26,26 @@ sortingOrder = [
 	'2022-June-1-Fragmented-Walls',
 	'2019-April-30-Cosmic-Curiosity',
 	'2020-February-24-Kaleidoscope-Lake',
-	'2020-April-09-Speed-Doodles-Showcase',
 	'2022-April-10-Tsunami-Duo',
 	'2019-June-16-Nautical-Drifters',
 	'2018-December-26-Whirling-Woods',
 	'2019-September-25-Tangled-Realms',
-	'2020-April-09-Pen-Sketches-Showcase',
 	'2020-January-15-Bacteriophage-Space-Age',
-	'2017-December-21-Digital-Artwork-Showcase',
+	'2020-April-09-Speed-Doodles-Showcase',
+	'2020-April-09-Pen-Sketches-Showcase',
+	'Miscellaneous',
 ]
 
 # Creates a thumbnail of the input image and saves it to the output path.
 def createThumbnail(inputPath, outputPath, size=(400, 240)):
 	with Image.open(inputPath) as img:
 		# Rotate the image according to its EXIF orientation
-		if hasattr(img, '_getexif'):  # only present in JPEGs
+		if hasattr(img, '_getexif'): # Only present in JPEGs
 			for orientation in ExifTags.TAGS.keys():
 				if ExifTags.TAGS[orientation] == 'Orientation':
 					break
 
-			e = img._getexif()  # returns None if no EXIF data
+			e = img._getexif() # Returns None if no EXIF data
 			if e is not None:
 				exif = dict(e.items())
 				orientation = exif.get(orientation, None)
