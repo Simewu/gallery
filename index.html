@@ -7,9 +7,9 @@
 	<meta name='description' content='A portfolio of Simeon.'>
 	<meta name='author' content='Simeon Wuthier'>
 	<title>Simeon · Wuthier</title>
-	<link rel='icon' href='https://simewu.com/favicon.svg'>
-	<link href='https://simewu.com/lib/css/bootstrap.min.css' rel='stylesheet'>
-	<link href='https://simewu.com/style.css' type='text/css' rel='stylesheet'>
+	<link rel='icon' href='https://simewu.github.io/favicon.svg'>
+	<link href='https://simewu.github.io/lib/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='https://simewu.github.io/style.css' type='text/css' rel='stylesheet'>
 	<style>
 		.gallery {
 			width: 100%;
@@ -130,9 +130,9 @@
 							href='https://simewu.com'>Home</a>
 					</li>
 					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
-							href='https://simewu.com/projects'>Projects</a></li>
+							href='https://simewu.github.io/projects'>Projects</a></li>
 					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
-							href='https://simewu.com/publications'>Publications</a></li>
+							href='https://simewu.github.io/publications'>Publications</a></li>
 					<li class='nav-item dropdown ms-4'>
 						<a class='nav-link dropdown-toggle nav-link-uline fs-6 text-color-bold' href='#' role='button'
 							data-bs-toggle='dropdown' aria-expanded='false'>
@@ -141,13 +141,13 @@
 						<div id='portfolioDropdown' class='dropdown-menu p-0 bg-color'
 							aria-labelledby='portfolioDropdown'>
 							<a class='dropdown-item text-color custom-dropdown-item'
-								href='https://simewu.com/gallery'>Artwork</a>
+								href='https://simewu.github.io/gallery'>Artwork</a>
 							<a class='dropdown-item text-color custom-dropdown-item'
-								href='https://simewu.com/resume'>Resume</a>
+								href='https://simewu.github.io/resume'>Resume</a>
 						</div>
 					</li>
 					<li class='nav-item ms-3'><a class='nav-link nav-link-uline fs-6 text-color-bold'
-							href='https://simewu.com/contact'>Contact</a></li>
+							href='https://simewu.github.io/contact'>Contact</a></li>
 				</ul>
 				<div class='form-check form-switch float-end'>
 					<label class='form-check-label text-color' for='nightModeToggle'>
@@ -189,10 +189,10 @@
 		<label id='timelineYLabel' for='timelineY' class='form-label text-color'>Y</label>
 	</div>
 	<footer class='container-main footer text-color-dim bg-color-dim'>Copyright © 2023 Simeon Wuthier.</footer>
-	<script src='https://simewu.com/lib/js/bootstrap.bundle.min.js'></script>
-	<script src='https://simewu.com/lib/js/feather.min.js'></script>
-	<script src='https://simewu.com/lib/js/jquery.min.js'></script>
-	<script type='text/javascript' src='https://simewu.com/script.js'></script>
+	<script src='https://simewu.github.io/lib/js/bootstrap.bundle.min.js'></script>
+	<script src='https://simewu.github.io/lib/js/feather.min.js'></script>
+	<script src='https://simewu.github.io/lib/js/jquery.min.js'></script>
+	<script type='text/javascript' src='https://simewu.github.io/script.js'></script>
 
 	<script>
 		// Remove the trailing slash from the URL
@@ -244,8 +244,8 @@
 			var html = '';
 			// Loop through the images
 			for (let dir in images) {
-				let directory = 'img/gallery_thumbnail';
-				let directoryFullRes = 'img/gallery';
+				let directory = 'https://simewu.github.io/gallery/img/gallery_thumbnail';
+				let directoryFullRes = 'https://simewu.github.io/gallery/img/gallery';
 				if (dir != 'gallery') {
 					directory += '/' + dir;
 					directoryFullRes += '/' + dir;
@@ -262,7 +262,7 @@
 				html += `<div class="scroll-wrapper"><div class="horizontal-scroll-container">`;
 				for (let fileName in images[dir]) {
 					let imagePath = directory + '/' + images[dir][fileName];
-					html += `<img class="gallery-image p-0 rounded hoverable" src="${imagePath}" alt="${images[dir][fileName]}" oncontextmenu="return false;" onclick="showModal('${dir}', '${directoryFullRes}', '${artworkName}', '${artworkDate}')">`;
+					html += `<img class="gallery-image p-0 rounded hoverable" src="${imagePath}" alt="${images[dir][fileName]}" oncontextmenu="return false;" onclick="showModal('${dir}', '${directory}', '${directoryFullRes}', '${artworkName}', '${artworkDate}')">`;
 				}
 				html += '</div></div>';
 			}
@@ -273,30 +273,77 @@
 		}
 
 		// Display the modal with the image
-		function showModal(index, directory, title, date) {
-			let imageHeight = window.innerHeight - 200;
-			let modal = document.getElementById('webpageModal');
-			let modalTitle = document.getElementById('webpageModalLabel');
-			let modalBody = document.querySelector('.modal-body');
-			modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
-			modalBody.innerHTML = '';
+function showModal(index, directory, directoryFullRes, title, date) {
+  let imageHeight = window.innerHeight - 200;
+  let modal = document.getElementById('webpageModal');
+  let modalTitle = document.getElementById('webpageModalLabel');
+  let modalBody = document.querySelector('.modal-body');
+  modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
+  modalBody.innerHTML = '';
+  let imageContainer = document.createElement('div');
+  imageContainer.className = 'scroll-wrapper';
+  imageContainer.style.height = imageHeight + 'px';
+  let imageScrollContainer = document.createElement('div');
+  imageScrollContainer.className = 'horizontal-scroll-container';
+  imageContainer.appendChild(imageScrollContainer);
+  modalBody.appendChild(imageContainer);
 
-			// Delay the modal to allow the image to load
-			setTimeout(function (modalBody, index, directory, title, date, imageHeight) {
-				let html = '';
-				html += '<div class="scroll-wrapper" style="height: ' + imageHeight + 'px;"><div class="horizontal-scroll-container">';
-				console.log(index)
-				for (let fileName in images[index]) {
-					let imagePath = directory + '/' + images[index][fileName];
-					console.log('imagePath', imagePath)
-					html += `<img class="img-fluid rounded" src="${imagePath}" alt="${images[index][fileName]}" style="height: ${imageHeight}px;">`;
-				}
-				html += '</div></div>';
-				modalBody.innerHTML = html;
-			}, 300, modalBody, index, directory, title, date, imageHeight);
+  // Preload and display thumbnail images first
+  preloadThumbnailImages(index, directory, images[index], imageScrollContainer, imageHeight, directoryFullRes);
+  
+  $('#webpageModal').modal('show');
+}
 
-			$('#webpageModal').modal('show');
-		}
+// Function to preload and display thumbnail images first
+function preloadThumbnailImages(index, directory, imageFiles, container, imageHeight, directoryFullRes) {
+  let loadedThumbnailCount = 0;
+
+  for (let currentIndex = 0; currentIndex < imageFiles.length; currentIndex++) {
+    let fileName = imageFiles[currentIndex];
+    let thumbnailImagePath = directory + '/' + fileName;
+    let img = new Image();
+    img.onload = function () {
+      // Thumbnail image is loaded, add it to the container
+      let imgElement = document.createElement('img');
+      imgElement.className = 'img-fluid rounded';
+      imgElement.src = thumbnailImagePath;
+      imgElement.alt = fileName;
+      imgElement.style.height = imageHeight + 'px';
+      container.appendChild(imgElement);
+
+      loadedThumbnailCount++;
+
+      // If all thumbnails are loaded, start loading full-resolution images
+      if (loadedThumbnailCount === imageFiles.length) {
+        preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, 0);
+      }
+    };
+    img.src = thumbnailImagePath; // Start loading the thumbnail image
+  }
+}
+
+// Function to preload and display full-resolution images sequentially
+function preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex) {
+  if (currentIndex >= imageFiles.length) {
+    return; // All full-resolution images are preloaded
+  }
+  let fileName = imageFiles[currentIndex];
+  let fullResImagePath = directoryFullRes + '/' + fileName;
+  let img = new Image();
+  img.onload = function () {
+    // Full-resolution image is loaded, replace the corresponding thumbnail with it
+    let thumbnailImg = container.querySelector('[alt="' + fileName + '"]');
+    if (thumbnailImg) {
+      thumbnailImg.src = fullResImagePath;
+    }
+
+    // Preload the next full-resolution image
+    preloadFullResImages(index, directory, directoryFullRes, imageFiles, container, imageHeight, currentIndex + 1);
+  };
+  img.src = fullResImagePath; // Start loading the full-resolution image
+}
+
+
 
 
 		let sliderSmoothingXIntervalThread = null;
