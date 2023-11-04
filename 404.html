@@ -69,29 +69,34 @@
 			if (attemptedPath.endsWith('/')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 1);
 
 			let redirectPathsHome = ['projects', 'publications', 'resume', 'gallery', 'contact', 'submitted'];
-			let redirectPathsHomeDict = { 'index': '', 'about': '', 'portfolio': 'projects', 'artwork': 'gallery', 'message': 'contact', 'simulator': 'blockchain-simulator' };
-			let redirectPathsRepos = ['blockchain-simulator', 'BASIC-transpiler', '2048-sampler', 'expression-evaluator'];
+			let redirectPathsHomeDict = { 'portfolio': 'projects', 'artwork': 'gallery', 'message': 'contact', 'simulator': 'blockchain-simulator' };
+			let redirectPathsLongNameRepos = ['blockchain-simulator', 'BASIC-transpiler', '2048-sampler', 'expression-evaluator'];
 
+			let lowestDist = 512, lowestDistPath = null;
 			for (let path of redirectPathsHome) {
 				let distance = levenshtein(path.toLowerCase(), attemptedPath.toLowerCase());
-				if (distance <= 3) {
-					window.location.replace(baseURL + path);
-					return;
+				if (distance <= 3 && distance < lowestDist) {
+					lowestDist = distance;
+					lowestDistPath = baseURL + path;
 				}
 			}
 			for (let path in redirectPathsHomeDict) {
 				let distance = levenshtein(path.toLowerCase(), attemptedPath.toLowerCase());
-				if (distance <= 3) {
-					window.location.replace(baseURL + redirectPathsHomeDict[path]);
-					return;
+				if (distance <= 3 && distance < lowestDist) {
+					lowestDist = distance;
+					lowestDistPath = baseURL + redirectPathsHomeDict[path];
 				}
 			}
-			for (let path of redirectPathsRepos) {
+			for (let path of redirectPathsLongNameRepos) {
 				let distance = levenshtein(path.toLowerCase(), attemptedPath.toLowerCase());
-				if (distance <= 6) {
-					window.location.replace(baseURL + path);
-					return;
+				if (distance <= 6 && distance < lowestDist) {
+					lowestDist = distance;
+					lowestDistPath = baseURL + path
 				}
+			}
+			if (lowestDistPath != null) {
+				if (localStorage.getItem('verbose') == 'true') alert('From ' + attemptedPath + ', redirecting to ' + lowestDistPath)
+				window.location.replace(lowestDistPath);
 			}
 		}
 
