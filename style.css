@@ -169,6 +169,7 @@ a:active:not(.btn, .navbar-brand, .nav-link) {
 .sidebar .nav-link {
 	font-weight: 500;
 	color: #333;
+	padding-top: 0;
 }
 
 .sidebar .nav-link .feather {

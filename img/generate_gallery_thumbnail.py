@@ -29,7 +29,6 @@ sortingOrder = [
 	'2022-April-10-Tsunami-Duo',
 	'2019-June-16-Nautical-Drifters',
 	'2018-December-26-Whirling-Woods',
-	'2019-September-25-Tangled-Realms',
 	'2020-January-15-Bacteriophage-Space-Age',
 	'2020-April-09-Speed-Doodles-Showcase',
 	'2020-April-09-Pen-Sketches-Showcase',
