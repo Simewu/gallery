@@ -1,5 +1,6 @@
 // Fade-in any elements that have the class 'fade' when the page loads 
 window.addEventListener('DOMContentLoaded', (event) => {
+	init();
 	let containerElement = document.querySelector('.fade');
 	if (containerElement) {
 		containerElement.classList.add('show');
@@ -194,5 +195,3 @@ function init() {
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false);
 }
-
-init();
