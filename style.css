@@ -260,3 +260,8 @@ p a {
 .custom-dropdown-item:hover {
 	background-color: var(--bg-color-dimmer);
 }
+
+#counter {
+    margin-right: 10px;
+    opacity: 0.2;
+}
