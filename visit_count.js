@@ -22,4 +22,3 @@ if (supportedPages.includes(page)) {
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-LGHB6S47PK');
-let containerElement = document.querySelector('.fade');

@@ -2,6 +2,7 @@
 window.addEventListener('DOMContentLoaded', (event) => {
 	init();
 	window.dataLayer = window.dataLayer || [];
+	let containerElement = document.querySelector('.fade');
 	if (containerElement) {
 		containerElement.classList.add('show');
 	}
