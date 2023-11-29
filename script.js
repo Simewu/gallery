@@ -1,6 +1,10 @@
 // Fade-in any elements that have the class 'fade' when the page loads 
 window.addEventListener('DOMContentLoaded', (event) => {
 	init();
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-LGHB6S47PK');
 	let containerElement = document.querySelector('.fade');
 	if (containerElement) {
 		containerElement.classList.add('show');
@@ -8,7 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 // Toggle between light and dark mode, affecting the background, text colors, and various other elements
-function toggleNightMode(isNight = true, useAnimations = true) {
+function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorage = true) {
 	let transitionClass = 'night-mode-animation';
 
 	let elements = document.querySelectorAll('.bg-color, .bg-color-dim, .text-color, .text-color-dim, .text-color-bold, p a');
@@ -125,7 +129,9 @@ function toggleNightMode(isNight = true, useAnimations = true) {
 	}
 	
 	// Keep the night mode state in local storage so it persists across page loads
-	localStorage.setItem('darkMode', JSON.stringify(isNight));
+	if (saveToLocalStorage) {
+		localStorage.setItem('darkMode', JSON.stringify(isNight));
+	}
 
 	// Toggle the dark mode version of the diagrams
 	setTimeout(function() {
@@ -193,10 +199,5 @@ function init() {
 	let storedDarkModeState = localStorage.getItem('darkMode');
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
-	toggleNightMode(isNight, false);
+	toggleNightMode(isNight, false, false);
 }
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-LGHB6S47PK');
