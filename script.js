@@ -195,3 +195,8 @@ function init() {
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false);
 }
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LGHB6S47PK');
