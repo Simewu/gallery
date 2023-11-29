@@ -180,14 +180,14 @@
 			}
 		}
 
-		.badge {
+		.highlight-badge {
 			background-color: rgba(77, 131, 137, 0.1);
 			color: white;
 			margin-right: 10px;
 			border: 1px solid rgba(111, 152, 157, 0.75);
 		}
 
-		.modal-title {
+		.modal-title-art {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -246,7 +246,7 @@
 			<div class='modal-dialog modal-xl'>
 				<div class='modal-content bg-color-dimmer modal-xl'>
 					<div class='modal-header'>
-						<h5 class='modal-title text-color' id='webpageModalLabel'></h5>
+						<h5 class='modal-title modal-title-art text-color' id='webpageModalLabel'></h5>
 						<button type='button' class='btn-close bg-color-inv' data-bs-dismiss='modal'
 							aria-label='Close'></button>
 					</div>
@@ -276,13 +276,32 @@
 				Copyright © 2023 Simeon Wuthier.
 			</div>
 			<div class='col-auto'>
-				<span id='counter' class='badge badge-pill float-right  text-color-dim'></span>
+				<span id='counter' class='badge badge-pill float-right text-color-dim' data-bs-toggle="modal" data-bs-target="#visitorModal"></span>
+			</div>
+		</div>
+	
+		<!-- Visitor Count Modal -->
+		<div class='modal fade' id='visitorModal' aria-labelledby='visitorModalLabel' aria-hidden='true'>
+			<div class='modal-dialog modal-lg'>
+				<div class='modal-content bg-color-dimmer modal-lg'>
+					<div class='modal-header'>
+						<h5 class='modal-title' id='visitorModalLabel'>Page Count for <span id='modalPageName'></span></h5>
+						<button type='button' class='btn-close bg-color-inv' data-bs-dismiss='modal'
+							aria-label='Close'></button>
+					</div>
+					<div class='modal-body p-2'>
+						<div id='totalVisitors'></div>
+						<div id='visitorGraphModal'></div>
+						<div id='yearlyVisitors'></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</footer>
 	<script src='lib/js/bootstrap.bundle.min.js' defer></script>
 	<script src='lib/js/feather.min.js'></script>
 	<script src='lib/js/jquery.min.js'></script>
+	<script async type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
 	<script async type='text/javascript' src='https://www.googletagmanager.com/gtag/js?id=G-LGHB6S47PK'></script>
 	<script async type='text/javascript' src='visit_count.min.js'></script>
 	<script type='text/javascript' src='script.min.js'></script>
@@ -351,8 +370,8 @@
 			}
 			gallery.innerHTML = html;
 			// Trigger a color refresh
-			let nightModeToggle = document.getElementById('nightModeToggle');
-			toggleNightMode(nightModeToggle.checked);
+			// let nightModeToggle = document.getElementById('nightModeToggle');
+			// toggleNightMode(nightModeToggle.checked, false, false);
 		}
 
 		// Display the modal with the image
@@ -361,7 +380,7 @@
 			let modal = document.getElementById('webpageModal');
 			let modalTitle = document.getElementById('webpageModalLabel');
 			let modalBody = document.querySelector('.modal-body');
-			modalTitle.innerHTML = title + ' <span class="badge float-right">' + date + '</span>';
+			modalTitle.innerHTML = title + ' <span class="badge highlight-badge float-right">' + date + '</span>';
 			modalBody.innerHTML = '';
 			let imageContainer = document.createElement('div');
 			imageContainer.className = 'scroll-wrapper';

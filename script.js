@@ -7,6 +7,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	}
 });
 
+
+let bgColor = '#212529';
+let bgColorInv = '#99e3ca';
+let bgColorDim = '#30333a';
+let bgColorDimmer = '#2a3945';
+let textColor = '#f7f9f9';
+let textColorInv = '#202828';
+let textColorDim = '#acd9ff';
+let textColorDimmer = '#2a3945';
+let textColorBold = '#ffffff';
+let linkText = '#bfffbf';
+let borderColor = '#8a9ba8';
+
 // Toggle between light and dark mode, affecting the background, text colors, and various other elements
 function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorage = true) {
 	let transitionClass = 'night-mode-animation';
@@ -22,32 +35,32 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 
 	let iconElement = document.getElementById('dayNightIcon');
 
-	let bgColor = '#f8f9fa';
-	let bgColorInv = '#4a7768';
-	let bgColorDim = '#ecf2f5';
-	let bgColorDimmer = '#c7dbea';
-	let textColor = '#202828';
-	let textColorInv = '#f7f9f9';
-	let textColorDim = '#055aa1';
-	let textColorDimmer = '#c7dbea';
-	let textColorBold = '#000000';
-	let linkText = '#3a633a';
-	let borderColor = '#b2cee5';
 	if (isNight) {
-		bgColor = '#212529';
-		bgColorInv = '#99e3ca';
-		bgColorDim = '#30333a';
-		bgColorDimmer = '#2a3945';
-		textColor = '#f7f9f9';
-		textColorInv = '#202828';
-		textColorDim = '#acd9ff';
-		textColorDimmer = '#2a3945';
-		textColorBold = '#ffffff';
-		linkText = '#bfffbf';
-		borderColor = '#8a9ba8';
-		iconElement.setAttribute('data-feather', 'moon');
-	} else {
+        bgColor = '#212529';
+        bgColorInv = '#99e3ca';
+        bgColorDim = '#30333a';
+        bgColorDimmer = '#2a3945';
+        textColor = '#f7f9f9';
+        textColorInv = '#202828';
+        textColorDim = '#acd9ff';
+        textColorDimmer = '#2a3945';
+        textColorBold = '#ffffff';
+        linkText = '#bfffbf';
+        borderColor = '#8a9ba8';
 		iconElement.setAttribute('data-feather', 'sun');
+    } else {
+		bgColor = '#f8f9fa';
+		bgColorInv = '#4a7768';
+		bgColorDim = '#ecf2f5';
+		bgColorDimmer = '#c7dbea';
+		textColor = '#202828';
+		textColorInv = '#f7f9f9';
+		textColorDim = '#055aa1';
+		textColorDimmer = '#c7dbea';
+		textColorBold = '#000000';
+		linkText = '#3a633a';
+		borderColor = '#b2cee5';
+		iconElement.setAttribute('data-feather', 'moon');
 	}
 
 	elements = document.querySelectorAll('.bg-color');

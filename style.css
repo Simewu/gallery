@@ -263,5 +263,16 @@ p a {
 
 #counter {
     margin-right: 10px;
-    opacity: 0.2;
+    opacity: 0.4;
+	cursor: pointer;
+}
+
+#visitorModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#visitorModal #visitorGraphModal {
+    width: 100%;
 }
