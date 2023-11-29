@@ -58,12 +58,10 @@ function drawChart(totalData, dailyData, pageName) {
 
 // Run the function to update the visitor count
 let page = location.href.split('/')[location.href.split('/').length - 1].toLowerCase();
-if (page.endsWith('.html')) {
-    page = page.split('.')[0];
-}
 if (page === '') {
     page = 'index';
 }
+// Don't log when pages end in .html
 let supportedPages = ['index', 'projects', 'publications', 'gallery', 'resume', 'contact', 'submitted'];
 if (supportedPages.includes(page)) {
     fetchAndUpdateCounter(page);
