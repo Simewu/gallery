@@ -7,6 +7,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	}
 });
 
+// Create a script tag with the given attributes and append next to the parent element
+function makeScriptTag(parent, src, isAsync, onError = null) {
+    let script = document.createElement('script');
+    parent.insertAdjacentElement('afterend', script);
+    script.type = 'text/javascript';
+    script.src = src;
+    script.async = isAsync;
+    if(onError != null) script.onerror = onError;
+}
+
 let scriptTag = document.querySelector('script[src="script.min.js"]');
 if (scriptTag == null) scriptTag = document.querySelector('script[src="https://simewu.github.io/script.min.js"]');
 else scriptTag = document.currentScript;
@@ -212,9 +222,5 @@ function init() {
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
-    let newScriptTag = document.createElement('script');
-    newScriptTag.type = 'text/javascript';
-    newScriptTag.src = 'lib/js/page_counter.min.js';
-    newScriptTag.async = true;
-    scriptTag.insertAdjacentElement('afterend', newScriptTag);
+	makeScriptTag(scriptTag, 'lib/js/page_counter.min.js', true);
 }
