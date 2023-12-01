@@ -7,6 +7,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	}
 });
 
+let scriptTag = document.querySelector('script[src="script.min.js"]');
+if (scriptTag == null) scriptTag = document.querySelector('script[src="https://simewu.github.io/script.min.js"]');
+else scriptTag = document.currentScript;
 
 let bgColor = '#212529';
 let bgColorInv = '#99e3ca';
@@ -209,10 +212,9 @@ function init() {
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
-	let scriptTag = document.querySelector('script[src="script.min.js"]');
     let newScriptTag = document.createElement('script');
     newScriptTag.type = 'text/javascript';
-    newScriptTag.src = 'page_counter.min.js';
+    newScriptTag.src = 'lib/js/page_counter.min.js';
     newScriptTag.async = true;
     scriptTag.insertAdjacentElement('afterend', newScriptTag);
 }
