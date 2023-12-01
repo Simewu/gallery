@@ -263,8 +263,8 @@ p a {
 
 #counter {
     margin-right: 10px;
-    opacity: 0.4;
-	cursor: pointer;
+    opacity: 0.2;
+	cursor: default;
 }
 
 #visitorModal .modal-body {
@@ -275,4 +275,7 @@ p a {
 
 #visitorModal #visitorGraphModal {
     width: 100%;
+	overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 30px;
 }
