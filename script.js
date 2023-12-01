@@ -210,15 +210,9 @@ function init() {
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
 	let scriptTag = document.querySelector('script[src="script.min.js"]');
-	if (scriptTag) {
-		// Add visitor counter and analytics scripts
-		let sources = ['https://www.gstatic.com/charts/loader.js', 'https://www.googletagmanager.com/gtag/js?id=G-LGHB6S47PK', 'page_counter.min.js']
-		for (let source of sources) {
-			let newScriptTag = document.createElement('script');
-			newScriptTag.type = 'text/javascript';
-			newScriptTag.src = source;
-			newScriptTag.async = true;
-			scriptTag.insertAdjacentElement('afterend', newScriptTag);
-		}
-	}
+    let newScriptTag = document.createElement('script');
+    newScriptTag.type = 'text/javascript';
+    newScriptTag.src = 'page_counter.min.js';
+    newScriptTag.async = true;
+    scriptTag.insertAdjacentElement('afterend', newScriptTag);
 }

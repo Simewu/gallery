@@ -1,23 +1,22 @@
-let siteData = {};
+let pageName, siteData = {};
 
-// Fetch visitor count from server and update counter
-async function fetchAndUpdateCounter(pageName) {
+// Fetch visitor count from server
+async function fetchCounterStats(pageName) {
     try {
         const urlPart1 = 'https://simewu-simple-';
         const urlPart2 = 'count.simewu.repl.co/';
         const response = await fetch(`${urlPart1}${urlPart2}${pageName}.json`);
         siteData = await response.json();
-        document.getElementById('counter').textContent = siteData.total;
-        document.getElementById('modalPageName').textContent = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-        setupModalListener();
     } catch (error) {
         console.error('Error fetching counter:', error);
         document.getElementById('counter').style.display = 'none';
     }
 }
 
+setTimeout(counterInit, 10);
+
 // Setup listener for modal
-function setupModalListener() {
+function setupModalListener(siteData) {
     var modal = document.getElementById('visitorModal');
     if (modal) {
         modal.addEventListener('show.bs.modal', function () {
@@ -92,19 +91,15 @@ function drawChart(totalData, dailyData, pageName) {
     }
 }
 
-setTimeout(counter_init, 10);
-
-// Initialize the counter
-function counter_init() {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-LGHB6S47PK');
-
-    var footer = document.querySelector('footer');
-    if (footer === null) {
-        return;
+function stats() {
+    if (siteData.total === undefined) {
+        return false;
     }
+    let scriptTag = document.querySelector('script[src="script.min.js"]');
+    let newScriptTag = document.createElement('script');
+    newScriptTag.type = 'text/javascript';
+    newScriptTag.src = 'https://www.gstatic.com/charts/loader.js';
+    scriptTag.insertAdjacentElement('afterend', newScriptTag);
 
     var counterDiv = document.createElement('div');
     counterDiv.className = 'col-auto';
@@ -114,6 +109,13 @@ function counter_init() {
     counterSpan.setAttribute('data-bs-toggle', 'modal');
     counterSpan.setAttribute('data-bs-target', '#visitorModal');
     counterDiv.appendChild(counterSpan);
+
+    var footer = document.querySelector('footer');
+    if (footer === null) {
+        document.getElementById('counter').display = 'none';
+        return false;
+    }
+
     var rowDiv = footer.querySelector('.row');
     if (rowDiv) {
         rowDiv.appendChild(counterDiv);
@@ -168,20 +170,35 @@ function counter_init() {
 
     footer.appendChild(modalDiv);
 
-    // Run the function to update the visitor count
-    let page = location.href.split('/')[location.href.split('/').length - 1].toLowerCase();
-    // Don't log when pages end in .html
-    // // if (page.endsWith('.html')) {
-    // //     page = page.substring(0, page.length - 5);
-    // // }
-    if (page === '') {
-        page = 'index';
-    }
+    document.getElementById('counter').textContent = siteData.total;
+    document.getElementById('modalPageName').textContent = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    setupModalListener(siteData);
+    return true;
+}
 
+// Initialize the counter
+function counterInit() {
+    let scriptTag = document.querySelector('script[src="script.min.js"]');
+    let newScriptTag = document.createElement('script');
+    newScriptTag.type = 'text/javascript';
+    newScriptTag.src = 'https://www.googletagmanager.com/gtag/js?id=G-LGHB6S47PK';
+    scriptTag.insertAdjacentElement('afterend', newScriptTag);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-LGHB6S47PK');
+
+    // Run the function to update the visitor count
+    pageName = location.href.split('/')[location.href.split('/').length - 1].toLowerCase();
+    // Don't log when pages end in .html
+    // // if (pageName.endsWith('.html')) {
+    // //     pageName = pageName.substring(0, pageName.length - 5);
+    // // }
+    if (pageName === '') {
+        pageName = 'index';
+    }
     let supportedPages = ['index', 'projects', 'publications', 'gallery', 'resume', 'contact', 'submitted'];
-    if (supportedPages.includes(page)) {
-        fetchAndUpdateCounter(page);
-    } else {
-        document.getElementById('counter').display = 'none';
+    if (supportedPages.includes(pageName)) {
+        fetchCounterStats(pageName);
     }
 }
