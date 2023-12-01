@@ -3,7 +3,7 @@ let siteData = {};
 // Fetch visitor count from server and update counter
 async function fetchAndUpdateCounter(pageName) {
     try {
-        const urlPart1 = 'http://simewu-simple-';
+        const urlPart1 = 'https://simewu-simple-';
         const urlPart2 = 'count.simewu.repl.co/';
         const response = await fetch(`${urlPart1}${urlPart2}${pageName}.json`);
         siteData = await response.json();
