@@ -35,6 +35,10 @@ a {
 	font-weight: 300;
 }
 
+.list-group-item {
+	border: none;
+}
+
 .container-main {
 	margin: 0 auto;
 	width: 100%;
@@ -262,20 +266,20 @@ p a {
 }
 
 #counter {
-    margin-right: 10px;
-    opacity: 0.2;
+	margin-right: 10px;
+	opacity: 0.2;
 	cursor: default;
 }
 
 #visitorModal .modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #visitorModal #visitorGraphModal {
-    width: 100%;
+	width: 100%;
 	overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 30px;
+	overflow-y: hidden;
+	padding-bottom: 30px;
 }
