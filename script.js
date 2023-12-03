@@ -9,17 +9,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 // Create a script tag with the given attributes and append next to the parent element
 function makeScriptTag(parent, src, isAsync, onError = null) {
-    let script = document.createElement('script');
-    parent.insertAdjacentElement('afterend', script);
-    script.type = 'text/javascript';
-    script.src = src;
-    script.async = isAsync;
-    if(onError != null) script.onerror = onError;
+	let script = document.createElement('script');
+	parent.insertAdjacentElement('afterend', script);
+	script.type = 'text/javascript';
+	script.src = src;
+	script.async = isAsync;
+	if(onError != null) script.onerror = onError;
 }
 
-let scriptTag = document.querySelector('script[src="script.min.js"]');
-if (scriptTag == null) scriptTag = document.querySelector('script[src="https://simewu.github.io/script.min.js"]');
-else scriptTag = document.currentScript;
+let scriptTag = document.querySelector('script[src="script.min.js"]'), useFullURL = false;
+if (scriptTag == null) {
+	scriptTag = document.querySelector('script[src="https://simewu.github.io/script.min.js"]');
+	useFullURL = true;
+}
+if (scriptTag == null) scriptTag = document.currentScript;
 
 let bgColor = '#212529';
 let bgColorInv = '#99e3ca';
@@ -49,19 +52,19 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 	let iconElement = document.getElementById('dayNightIcon');
 
 	if (isNight) {
-        bgColor = '#212529';
-        bgColorInv = '#99e3ca';
-        bgColorDim = '#30333a';
-        bgColorDimmer = '#2a3945';
-        textColor = '#f7f9f9';
-        textColorInv = '#202828';
-        textColorDim = '#acd9ff';
-        textColorDimmer = '#2a3945';
-        textColorBold = '#ffffff';
-        linkText = '#bfffbf';
-        borderColor = '#8a9ba8';
+		bgColor = '#212529';
+		bgColorInv = '#99e3ca';
+		bgColorDim = '#30333a';
+		bgColorDimmer = '#2a3945';
+		textColor = '#f7f9f9';
+		textColorInv = '#202828';
+		textColorDim = '#acd9ff';
+		textColorDimmer = '#2a3945';
+		textColorBold = '#ffffff';
+		linkText = '#bfffbf';
+		borderColor = '#8a9ba8';
 		iconElement.setAttribute('data-feather', 'sun');
-    } else {
+	} else {
 		bgColor = '#f8f9fa';
 		bgColorInv = '#4a7768';
 		bgColorDim = '#ecf2f5';
@@ -222,5 +225,5 @@ function init() {
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
-	makeScriptTag(scriptTag, 'lib/js/page_counter.min.js', true);
+	makeScriptTag(scriptTag, (useFullURL ? 'https://simewu.github.io/' : '') + 'lib/js/page_counter.min.js', true);
 }
