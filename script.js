@@ -152,6 +152,31 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 			btn.classList.add('btn-outline-light');
 		});
 	}
+
+    // Toggle between bg-dark and bg-light, btn-dark and btn-light
+    let bgDarkElements = document.querySelectorAll('.bg-dark');
+    let bgLightElements = document.querySelectorAll('.bg-light');
+    let btnDarkElements = document.querySelectorAll('.btn-dark');
+    let btnLightElements = document.querySelectorAll('.btn-light');
+    if (isNight) {
+        bgLightElements.forEach(el => {
+            el.classList.remove('bg-light');
+            el.classList.add('bg-dark');
+        });
+        btnLightElements.forEach(btn => {
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-dark');
+        });
+    } else {
+        bgDarkElements.forEach(el => {
+            el.classList.remove('bg-dark');
+            el.classList.add('bg-light');
+        });
+        btnDarkElements.forEach(btn => {
+            btn.classList.remove('btn-dark');
+            btn.classList.add('btn-light');
+        });
+    }
 	
 	// Keep the night mode state in local storage so it persists across page loads
 	if (saveToLocalStorage) {
