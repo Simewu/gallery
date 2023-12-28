@@ -149,6 +149,12 @@ a:active:not(.btn, .navbar-brand, .nav-link) {
 	border-bottom: var(--bs-border-width) var(--bs-border-style) rgba(180, 180, 180, 0.3) !important;
 }
 
+.blind {
+	color: inherit !important;
+	text-decoration: none !important;
+	cursor: inherit !important;
+}
+
 .sidebar {
 	position: relative;
 	top: 0;
