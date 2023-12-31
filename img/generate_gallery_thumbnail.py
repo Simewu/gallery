@@ -25,11 +25,11 @@ sortingOrder = [
 	'2019-July-12-Drifting-Underneath',
 	'2022-June-1-Fragmented-Walls',
 	'2019-April-30-Cosmic-Curiosity',
-	'2020-February-24-Kaleidoscope-Lake',
 	'2022-April-10-Tsunami-Duo',
 	'2019-June-16-Nautical-Drifters',
 	'2020-January-15-Bacteriophage-Space-Age',
 	'2018-December-26-Whirling-Woods',
+	'2020-February-24-Kaleidoscope-Lake',
 	'2020-April-09-Pen-Sketches-Showcase',
 	'2020-April-09-Speed-Doodles-Showcase',
 ]
