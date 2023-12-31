@@ -31,7 +31,6 @@ sortingOrder = [
 	'2020-January-15-Bacteriophage-Space-Age',
 	'2018-December-26-Whirling-Woods',
 	'2020-April-09-Speed-Doodles-Showcase',
-	'Miscellaneous',
 	'2020-April-09-Pen-Sketches-Showcase',
 ]
 
@@ -78,9 +77,9 @@ def registerImage(fileName, imagePath):
 		# Case where there is a directory in the path
 		folderName = parts[-2]
 		try:
-			imageNumber = int(parts[-1].split('.')[0])
+			imageNumber = int(parts[-1].split('.')[0].split('-')[0])
 		except ValueError:
-			imageNumber = parts[-1]
+			imageNumber = 1000000 #parts[-1]
 	else:
 		# Case where the imagePath is just a filename in the base directory
 		folderName = parts[0].split('.')[0]
@@ -106,10 +105,10 @@ def makeThumbnailDirectory(inputPath, outputPath):
 
 	for root, dirs, files in os.walk(inputPath):
 		# Skip directories named 'raw' and 'Miscellaneous'
-		if 'raw' in [os.path.basename(d) for d in dirs]:
-			dirs.remove('raw')
-		# if 'Miscellaneous' in [os.path.basename(d) for d in dirs]:
-		# 	dirs.remove('Miscellaneous')
+		for d in dirs:
+			basename = os.path.basename(d)
+			if basename.startswith('raw_') or basename == 'raw' or basename == 'Miscellaneous':
+				dirs.remove(d)
 
 		for fileName in files:
 			if isImageFile(fileName):
