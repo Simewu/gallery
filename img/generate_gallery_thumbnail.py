@@ -12,9 +12,9 @@ sortingOrder = [
 	'2020-July-20-Luminous-Voyage',
 	'2017-December-21-Digital-Artwork-Showcase',
 	'2020-December-25-Rippling-Melody',
-	'2021-March-3-Owl-Opulent-Oculars',
-	'2019-June-22-Finite-Perception',
 	'2019-February-22-Starry-Sight',
+	'2019-June-22-Finite-Perception',
+	'2021-March-3-Owl-Opulent-Oculars',
 	'2019-September-12-Dreamer-Perception',
 	'2021-April-26-Celestial-Currents',
 	'2019-January-4-Whispering-Meadow',
@@ -30,8 +30,8 @@ sortingOrder = [
 	'2020-January-15-Bacteriophage-Space-Age',
 	'2018-December-26-Whirling-Woods',
 	'2020-February-24-Kaleidoscope-Lake',
-	'2020-April-09-Pen-Sketches-Showcase',
 	'2020-April-09-Speed-Doodles-Showcase',
+	'2020-April-09-Pen-Sketches-Showcase',
 ]
 
 # Creates a thumbnail of the input image and saves it to the output path.
