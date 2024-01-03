@@ -193,6 +193,10 @@
 			align-items: center;
 			width: 100%;
 		}
+
+		::-webkit-scrollbar-thumb {
+			background: rgba(63, 124, 128, 0.75) !important;
+		}
 	</style>
 </head>
 
@@ -226,7 +230,7 @@
 						</div>
 					</li>
 					<li class='nav-item ms-3' onclick='nightModeToggle.click()'>
-						<a class='nav-link nav-link-uline fs-6 text-color-bold'
+						<a class='nav-link nav-link-uline fs-6 text-color-bold' id='contactNav'
 							href='https://simewu.github.io/contact'>Contact</a>
 					</li>
 				</ul>
@@ -258,7 +262,7 @@
 		</div>
 		<main class='col-md-12 ms-sm-auto col-lg-12 pt-0 px-md-4 bg-color'>
 			<div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3'>
-				<div class='container text-color'>
+				<div class='container text-color px-0'>
 					<div class='gallery' id='gallery'></div>
 				</div>
 			</div>
@@ -273,12 +277,12 @@
 		</div>
 	</div>
 	<div id='sliderContainer' class='container-main d-flex align-items-center bg-color'>
-		<label id='timelineYLabel' for='timelineY' class='form-label text-color'>Y</label>
-		<input id='timelineY' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
-			oninput='sliderChangeY(true)'>
+		<label id='timelineXLabel' for='timelineX' class='form-label text-color'>X</label>
 		<input id='timelineX' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
 			oninput='sliderChangeX(true)'>
-		<label id='timelineXLabel' for='timelineX' class='form-label text-color'>X</label>
+		<input id='timelineY' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
+			oninput='sliderChangeY(true)'>
+		<label id='timelineYLabel' for='timelineY' class='form-label text-color'>Y</label>
 	</div>
 	<footer class='container-main footer text-color-dim bg-color-dim'>
 		<div class='row'>
@@ -346,7 +350,7 @@
 					artworkDate = artworkDateSplit[1] + ' ' + artworkDateSplit[2] + ', ' + artworkDateSplit[0];
 				}
 
-				html += `<div id='${dir}' class="scroll-wrapper"><div class="horizontal-scroll-container">`;
+				html += `<div id='${dir}' class="scroll-wrapper" onscroll="handleUserXScroll(this)"><div class="horizontal-scroll-container">`;
 				for (let fileName in images[dir]) {
 					let imagePath = directory + '/' + images[dir][fileName];
 					html += `<img class="gallery-image p-0 rounded hoverable" src="${imagePath}" alt="${images[dir][fileName]}" oncontextmenu="return false;" onclick="showModal('${dir}', '${directory}', '${directoryFullRes}', '${artworkName}', '${artworkDate}')">`;
@@ -354,6 +358,7 @@
 				html += '</div></div>';
 			}
 			gallery.innerHTML = html;
+
 			// Trigger a color refresh
 			// let nightModeToggle = document.getElementById('nightModeToggle');
 			// toggleNightMode(nightModeToggle.checked, false, false);
@@ -464,7 +469,25 @@
 			// console.log('Stopped preloading')
 		});
 
-		let sliderSmoothingXIntervalThread = null;
+		let sliderSmoothingXIntervalThread = null, scrollContainerX = null, scrollContainerXTimeoutThread = null;
+
+		// Function to detect user scroll and update the other horizontal scroll containers
+		function handleUserXScroll(scrollContainer) {
+			if (sliderSmoothingXIntervalThread === null && (scrollContainerX == null || scrollContainerX == event.target)) {
+				scrollContainerX = scrollContainer;
+				let maxScrollLeft = scrollContainerX.scrollWidth - scrollContainerX.clientWidth;
+				let value = scrollContainerX.scrollLeft * 1000 / maxScrollLeft;
+				let otherContainers = document.getElementsByClassName('scroll-wrapper');
+				for (let i = 0; i < otherContainers.length; i++) {
+					if (otherContainers[i] != scrollContainerX) {
+						otherContainers[i].scrollLeft = value * (otherContainers[i].scrollWidth - otherContainers[i].clientWidth) / 1000;
+					}
+				}
+				document.getElementById('timelineX').value = value;
+				clearTimeout(scrollContainerXTimeoutThread);
+				scrollContainerXTimeoutThread = setTimeout(() => scrollContainerX = null, 1000 / 30);
+			}
+		}
 
 		// Upon changing the slider, scroll all the horizontal scroll containers to the same percentage
 		function sliderChangeX(triggeredByDom = false) {
@@ -492,16 +515,21 @@
 		let lastKnownScrollTop = 0; // Used to cancel the smooth scrolling when the user scrolls
 
 		// Function to detect user scroll and disable smooth scrolling
-		function handleUserScroll() {
+		function handleUserYScroll() {
 			const container = document.getElementById('container');
 			if (Math.abs(container.scrollTop - lastKnownScrollTop) > 10) {
 				clearInterval(sliderSmoothingYIntervalThread);
 				sliderSmoothingYIntervalThread = null;
 			}
+			if (sliderSmoothingYIntervalThread === null) {
+				let maxScrollTop = container.scrollHeight - container.clientHeight;
+				let value = container.scrollTop * 1000 / maxScrollTop;
+				document.getElementById('timelineY').value = value;
+			}
 		}
 
 		// Attach the event listener to detect user scroll
-		document.getElementById('container').addEventListener('scroll', handleUserScroll);
+		document.getElementById('container').addEventListener('scroll', handleUserYScroll);
 
 		// Smooth scrolling function
 		function sliderChangeY(triggeredByDom = false) {
