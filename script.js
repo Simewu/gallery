@@ -243,6 +243,13 @@ function toggleDayNightIcon() {
 	}
 }
 
+// Prevent a redirect the same time as the night mode toggle by using a timeout
+function maybeToggleNightMode() {
+	setTimeout(function() {
+        toggleDayNightIcon();
+	}, 200);
+}
+
 // Initialization of the page
 function init() {
 	let useDarkModeByDefault = true;
