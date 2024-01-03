@@ -482,7 +482,7 @@
 
 		// Function to detect user scroll and update the other horizontal scroll containers
 		function handleUserXScroll(scrollContainer) {
-			if (horizontalScrollLock) return;
+			if (horizontalScrollLock || sliderSmoothingXIntervalThread != null) return;
 			if (scrollContainerX == event.target || scrollContainerX == null) {
 				scrollContainerX = scrollContainer;
 				let maxScrollLeft = scrollContainerX.scrollWidth - scrollContainerX.clientWidth;
