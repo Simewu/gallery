@@ -70,6 +70,13 @@
 			margin-bottom: 1px;
 		}
 
+		#scrollLockIcon {
+			color: rgb(78 106 154);
+			width: 17px;
+			height: 16px;
+			margin-bottom: 3px;
+		}
+
 		.form-range {
 			flex-grow: 1;
 			margin: 0 20px;
@@ -277,7 +284,9 @@
 		</div>
 	</div>
 	<div id='sliderContainer' class='container-main d-flex align-items-center bg-color'>
-		<label id='timelineXLabel' for='timelineX' class='form-label text-color'>X</label>
+		<label id='timelineXLabel' for='timelineX' class='form-label text-color' onclick='toggleXScrollLock()'
+			title='Click to toggle the horizontal scroll lock to reduce motion'>X <i id='scrollLockIcon'
+				class='feather feather-icon' data-feather='lock' style='display: none'></i></label>
 		<input id='timelineX' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
 			oninput='sliderChangeX(true)'>
 		<input id='timelineY' type='range' class='form-range flex-grow-1' value='0' min='0' max='1000'
@@ -469,10 +478,11 @@
 			// console.log('Stopped preloading')
 		});
 
-		let sliderSmoothingXIntervalThread = null, scrollContainerX = null, scrollContainerXTimeoutThread = null;
+		let sliderSmoothingXIntervalThread = null, scrollContainerX = null, scrollContainerXTimeoutThread = null, horizontalScrollLock = false;
 
 		// Function to detect user scroll and update the other horizontal scroll containers
 		function handleUserXScroll(scrollContainer) {
+			if (horizontalScrollLock) return;
 			if (sliderSmoothingXIntervalThread === null && (scrollContainerX == null || scrollContainerX == event.target)) {
 				scrollContainerX = scrollContainer;
 				let maxScrollLeft = scrollContainerX.scrollWidth - scrollContainerX.clientWidth;
@@ -508,6 +518,19 @@
 			} else {
 				clearInterval(sliderSmoothingXIntervalThread);
 				sliderSmoothingXIntervalThread = null;
+			}
+		}
+
+		// Toggle the horizontal scroll lock
+		function toggleXScrollLock() {
+			let icon = document.getElementById('scrollLockIcon');
+			if (icon.style.display == 'none') {
+				icon.style.display = 'inline-block';
+				horizontalScrollLock = true;
+			} else {
+				icon.style.display = 'none';
+				horizontalScrollLock = false;
+				sliderChangeX();
 			}
 		}
 
