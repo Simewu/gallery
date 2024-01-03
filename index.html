@@ -478,7 +478,7 @@
 			// console.log('Stopped preloading')
 		});
 
-		let scrollContainerX = null, scrollContainerXTimeoutThread = null, horizontalScrollLock = false;
+		let sliderSmoothingXIntervalThread = null, scrollContainerX = null, scrollContainerXTimeoutThread = null, horizontalScrollLock = false;
 
 		// Function to detect user scroll and update the other horizontal scroll containers
 		function handleUserXScroll(scrollContainer) {
@@ -503,6 +503,7 @@
 		function sliderChangeX(triggeredByDom = false) {
 			let value = document.getElementById('timelineX').value;
 			let smoothX = 30;
+			//if (horizontalScrollLock) smoothX = 0; // Disable smoothness when the horizontal scroll lock is enabled
 			let scrollWrappers = document.getElementsByClassName('scroll-wrapper'), maxDist = 0;
 			for (let i = 0; i < scrollWrappers.length; i++) {
 				let targetScrollLeft = value * (scrollWrappers[i].scrollWidth - scrollWrappers[i].clientWidth) / 1000;
