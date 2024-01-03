@@ -478,12 +478,12 @@
 			// console.log('Stopped preloading')
 		});
 
-		let sliderSmoothingXIntervalThread = null, scrollContainerX = null, scrollContainerXTimeoutThread = null, horizontalScrollLock = false;
+		let scrollContainerX = null, scrollContainerXTimeoutThread = null, horizontalScrollLock = false;
 
 		// Function to detect user scroll and update the other horizontal scroll containers
 		function handleUserXScroll(scrollContainer) {
 			if (horizontalScrollLock) return;
-			if (sliderSmoothingXIntervalThread === null && (scrollContainerX == null || scrollContainerX == event.target)) {
+			if (scrollContainerX == event.target || scrollContainerX == null) {
 				scrollContainerX = scrollContainer;
 				let maxScrollLeft = scrollContainerX.scrollWidth - scrollContainerX.clientWidth;
 				let value = scrollContainerX.scrollLeft * 1000 / maxScrollLeft;
