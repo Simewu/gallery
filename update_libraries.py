@@ -78,6 +78,7 @@ def main():
 		print('An error occurred while fetching the JSON data.')
 
 	# Does not work automatically because the mjs files use import which is not supported by the client
+	# Instead?? (still mjs) Download from https://mozilla.github.io/pdf.js/getting_started/#download
 	# print()
 	# print('Updating PDF Viewer...')
 	# jsonData = fetchJsonFromUrl('https://api.cdnjs.com/libraries/pdf.js/')
