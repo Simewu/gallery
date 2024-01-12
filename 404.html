@@ -67,6 +67,8 @@
 			let attemptedPath = window.location.pathname;
 			if (attemptedPath.startsWith('/')) attemptedPath = attemptedPath.substring(1);
 			if (attemptedPath.endsWith('/')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 1);
+			if (attemptedPath.endsWith('index.html')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 10);
+			if (attemptedPath.endsWith('/')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 1);
 
 			let redirectPathsHome = ['projects', 'publications', 'resume', 'gallery', 'contact', 'submitted'];
 			let redirectPathsHomeDict = { 'portfolio': 'projects', 'artwork': 'gallery', 'message': 'contact', 'simulator': 'blockchain-simulator' };
