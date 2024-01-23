@@ -22,7 +22,7 @@ body {
 
 .navbar-toggler:focus {
 	--bs-navbar-toggler-focus-width: 1px !important;
-    color: rgba(157, 255, 219, 0.6) !important;
+	color: rgba(157, 255, 219, 0.6) !important;
 }
 
 h3 {
@@ -63,13 +63,13 @@ a {
 		max-width: 700px;
 	}
 
-    .container {
-        max-width: inherit !important;
-    }
+	.container {
+		max-width: inherit !important;
+	}
 
-    .sidebar {
-        width: 100%;
-    }
+	.sidebar {
+		width: 100%;
+	}
 
 	.form-check.form-switch {
 		margin-top: -36px;
@@ -79,7 +79,7 @@ a {
 		border: 0 !important;
 	}
 
-    /* Give room for the night mode switch */
+	/* Give room for the night mode switch */
 	#contactNav {
 		margin-right: 100px !important;
 		border-right: 1px solid rgba(180, 180, 180, 0.3) !important;
@@ -248,6 +248,10 @@ p a {
 .text-color-inv,
 p a {
 	color: white;
+}
+
+.highlight-badge {
+	color: inherit !important;
 }
 
 .night-mode-animation {

@@ -14,7 +14,7 @@ function makeScriptTag(parent, src, isAsync, onError = null) {
 	script.type = 'text/javascript';
 	script.src = src;
 	script.async = isAsync;
-	if(onError != null) script.onerror = onError;
+	if (onError != null) script.onerror = onError;
 }
 
 let scriptTag = document.querySelector('script[src="script.min.js"]'), useFullURL = false;
@@ -81,54 +81,55 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 
 	elements = document.querySelectorAll('.bg-color');
 	elements.forEach(function (el) {
-		el.style.backgroundColor = bgColor;
+		el.style.setProperty('background-color', bgColor, 'important');
 	});
 	elements = document.querySelectorAll('.bg-color-inv');
 	elements.forEach(function (el) {
-		el.style.backgroundColor = bgColorInv;
+		el.style.setProperty('background-color', bgColorInv, 'important');
 	});
 	elements = document.querySelectorAll('.bg-color-dim');
 	elements.forEach(function (el) {
-		el.style.backgroundColor = bgColorDim;
+		el.style.setProperty('background-color', bgColorDim, 'important');
 	});
 	elements = document.querySelectorAll('.bg-color-dimmer');
 	elements.forEach(function (el) {
-		el.style.backgroundColor = bgColorDimmer;
+		el.style.setProperty('background-color', bgColorDimmer, 'important');
 	});
 	elements = document.querySelectorAll('.text-color');
 	elements.forEach(function (el) {
-		el.style.color = textColor;
+		el.style.setProperty('color', textColor, 'important');
 	});
 	elements = document.querySelectorAll('.text-color-inv');
 	elements.forEach(function (el) {
-		el.style.color = textColorInv;
+		el.style.setProperty('color', textColorInv, 'important');
 	});
 	elements = document.querySelectorAll('.text-color-dim');
 	elements.forEach(function (el) {
-		el.style.color = textColorDim;
+		el.style.setProperty('color', textColorDim, 'important');
 	});
 	elements = document.querySelectorAll('.text-color-dimmer');
 	elements.forEach(function (el) {
-		el.style.color = textColorDimmer;
+		el.style.setProperty('color', textColorDimmer, 'important');
 	});
 	elements = document.querySelectorAll('.text-color-bold');
 	elements.forEach(function (el) {
-		el.style.color = textColorBold;
+		el.style.setProperty('color', textColorBold, 'important');
 	});
 	elements = document.querySelectorAll('p a');
 	elements.forEach(function (el) {
-		el.style.color = linkText;
+		el.style.setProperty('color', linkText, 'important');
 	});
-	document.body.style.setProperty('--border-color', borderColor);
-	document.body.style.setProperty('--bg-color', bgColor);
-	document.body.style.setProperty('--bg-color-inv', bgColorInv);
-	document.body.style.setProperty('--bg-color-dim', bgColorDim);
-	document.body.style.setProperty('--bg-color-dimmer', bgColorDimmer);
-	document.body.style.setProperty('--text-color', textColor);
-	document.body.style.setProperty('--text-color-inv', textColorInv);
-	document.body.style.setProperty('--text-color-dim', textColorDim);
-	document.body.style.setProperty('--text-color-dimmer', textColorDimmer);
-	document.body.style.setProperty('--text-color-bold', textColorBold);
+
+	document.body.style.setProperty('--border-color', borderColor, 'important');
+	document.body.style.setProperty('--bg-color', bgColor, 'important');
+	document.body.style.setProperty('--bg-color-inv', bgColorInv, 'important');
+	document.body.style.setProperty('--bg-color-dim', bgColorDim, 'important');
+	document.body.style.setProperty('--bg-color-dimmer', bgColorDimmer, 'important');
+	document.body.style.setProperty('--text-color', textColor, 'important');
+	document.body.style.setProperty('--text-color-inv', textColorInv, 'important');
+	document.body.style.setProperty('--text-color-dim', textColorDim, 'important');
+	document.body.style.setProperty('--text-color-dimmer', textColorDimmer, 'important');
+	document.body.style.setProperty('--text-color-bold', textColorBold, 'important');
 
 	// Switch btn-outline-light to btn-outline-dark and vice-versa
 	let lightButtons = document.querySelectorAll('.btn-outline-light');
@@ -153,38 +154,38 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 		});
 	}
 
-    // Toggle between bg-dark and bg-light, btn-dark and btn-light
-    let bgDarkElements = document.querySelectorAll('.bg-dark');
-    let bgLightElements = document.querySelectorAll('.bg-light');
-    let btnDarkElements = document.querySelectorAll('.btn-dark');
-    let btnLightElements = document.querySelectorAll('.btn-light');
-    if (isNight) {
-        bgLightElements.forEach(el => {
-            el.classList.remove('bg-light');
-            el.classList.add('bg-dark');
-        });
-        btnLightElements.forEach(btn => {
-            btn.classList.remove('btn-light');
-            btn.classList.add('btn-dark');
-        });
-    } else {
-        bgDarkElements.forEach(el => {
-            el.classList.remove('bg-dark');
-            el.classList.add('bg-light');
-        });
-        btnDarkElements.forEach(btn => {
-            btn.classList.remove('btn-dark');
-            btn.classList.add('btn-light');
-        });
-    }
-	
+	// Toggle between bg-dark and bg-light, btn-dark and btn-light
+	let bgDarkElements = document.querySelectorAll('.bg-dark');
+	let bgLightElements = document.querySelectorAll('.bg-light');
+	let btnDarkElements = document.querySelectorAll('.btn-dark');
+	let btnLightElements = document.querySelectorAll('.btn-light');
+	if (isNight) {
+		bgLightElements.forEach(el => {
+			el.classList.remove('bg-light');
+			el.classList.add('bg-dark');
+		});
+		btnLightElements.forEach(btn => {
+			btn.classList.remove('btn-light');
+			btn.classList.add('btn-dark');
+		});
+	} else {
+		bgDarkElements.forEach(el => {
+			el.classList.remove('bg-dark');
+			el.classList.add('bg-light');
+		});
+		btnDarkElements.forEach(btn => {
+			btn.classList.remove('btn-dark');
+			btn.classList.add('btn-light');
+		});
+	}
+
 	// Keep the night mode state in local storage so it persists across page loads
 	if (saveToLocalStorage) {
 		localStorage.setItem('darkMode', JSON.stringify(isNight));
 	}
 
 	// Toggle the dark mode version of the diagrams
-	setTimeout(function() {
+	setTimeout(function () {
 		let highLevelComponentsImg = document.getElementById('highLevelComponents');
 		let quicStackImg = document.getElementById('quicStack');
 		let pqcPlotImg = document.getElementById('pqcPlot');
