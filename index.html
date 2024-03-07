@@ -207,7 +207,7 @@
 	</style>
 </head>
 
-<body class='bg-color'>
+<body class='bg-color-container'>
 	<header class='container-main navbar navbar-expand-md navbar-light bg-color sticky-top border-bottom-dim'>
 		<div class='container'>
 			<a class='navbar-brand text-center fs-5 col-md-2 border-0 bg-transparent text-color-bold'>Simeon Wuthier</a>
@@ -236,7 +236,7 @@
 							<a class='dropdown-item text-color custom-dropdown-item' href='resume'>Resume</a>
 						</div>
 					</li>
-					<li class='nav-item ms-3'>
+					<li class='nav-item ms-3' id='contactNavContainer'>
 						<a class='nav-link nav-link-uline fs-6 text-color-bold' id='contactNav'
 							href='https://simewu.github.io/contact'>Contact</a>
 					</li>
@@ -245,7 +245,7 @@
 					<label class='form-check-label text-color' for='nightModeToggle'>
 						<i id='dayNightIcon' data-feather='sun'></i>
 					</label>
-					<input class='form-check-input' type='checkbox' id='nightModeToggle'
+					<input class='form-check-input d-none' type='checkbox' id='nightModeToggle'
 						onchange='toggleDayNightIcon()'>
 				</div>
 			</div>
@@ -296,7 +296,7 @@
 	<footer class='container-main footer text-color-dim bg-color-dim'>
 		<div class='row'>
 			<div class='col text-center'>
-				Copyright © 2023 Simeon Wuthier.
+				Copyright © 2024 Simeon Wuthier.
 			</div>
 		</div>
 	</footer>

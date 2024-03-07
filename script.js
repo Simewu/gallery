@@ -28,6 +28,7 @@ let bgColor = '#212529';
 let bgColorInv = '#99e3ca';
 let bgColorDim = '#30333a';
 let bgColorDimmer = '#2a3945';
+let bgColorContainer = '#212529';
 let textColor = '#f7f9f9';
 let textColorInv = '#202828';
 let textColorDim = '#acd9ff';
@@ -56,6 +57,7 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 		bgColorInv = '#99e3ca';
 		bgColorDim = '#30333a';
 		bgColorDimmer = '#2a3945';
+		bgColorContainer = '#1f2327';
 		textColor = '#f7f9f9';
 		textColorInv = '#202828';
 		textColorDim = '#acd9ff';
@@ -69,6 +71,7 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 		bgColorInv = '#4a7768';
 		bgColorDim = '#ecf2f5';
 		bgColorDimmer = '#c7dbea';
+		bgColorContainer = '#3d465c'; //'#e4e4e4';
 		textColor = '#202828';
 		textColorInv = '#f7f9f9';
 		textColorDim = '#055aa1';
@@ -95,41 +98,45 @@ function toggleNightMode(isNight = true, useAnimations = true, saveToLocalStorag
 	elements.forEach(function (el) {
 		el.style.setProperty('background-color', bgColorDimmer, 'important');
 	});
+	elements = document.querySelectorAll('.bg-color-container');
+	elements.forEach(function (el) {
+		el.style.setProperty('background-color', bgColorContainer, 'important');
+	});
 
-	// Set the text color only if the element does not have the 'blind' class
+	// Set the text color only if the element does not have the 'url-nohover' class
 	elements = document.querySelectorAll('.text-color');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', textColor, 'important');
 		}
 	});
 	elements = document.querySelectorAll('.text-color-inv');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', textColorInv, 'important');
 		}
 	});
 	elements = document.querySelectorAll('.text-color-dim');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', textColorDim, 'important');
 		}
 	});
 	elements = document.querySelectorAll('.text-color-dimmer');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', textColorDimmer, 'important');
 		}
 	});
 	elements = document.querySelectorAll('.text-color-bold');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', textColorBold, 'important');
 		}
 	});
 	elements = document.querySelectorAll('p a');
 	elements.forEach(function (el) {
-		if (!el.classList.contains('blind')) {
+		if (!el.classList.contains('url-nohover')) {
 			el.style.setProperty('color', linkText, 'important');
 		}
 	});
