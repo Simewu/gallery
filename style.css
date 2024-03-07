@@ -237,6 +237,10 @@ a:active:not(.btn, .navbar-brand, .nav-link) {
     background-color: #212529;
 }
 
+.bg-color-container {
+    background-image: url('img/bg.png');
+}
+
 .bg-color-inv {
     background-color: #99e3ca;
 }
