@@ -232,7 +232,8 @@ a:active:not(.btn, .navbar-brand, .nav-link) {
 
 .bg-color,
 .bg-color-dim,
-.bg-color-dimmer {
+.bg-color-dimmer,
+.bg-color-container {
     background-color: #212529;
 }
 
