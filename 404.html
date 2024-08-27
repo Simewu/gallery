@@ -21,11 +21,11 @@
 	</style>
 </head>
 
-<body class='bg-color'>
+<body class='bg-color-container'>
 	<div class='form-check form-switch' style='display: none;'>
-		<label class='form-check-label text-color' for='nightModeToggle'><i id='dayNightIcon'
+		<label class='form-check-label text-color cursor-pointer' for='nightModeToggle'><i id='dayNightIcon'
 				data-feather='sun'></i></label>
-		<input class='form-check-input' type='checkbox' id='nightModeToggle' onchange='toggleDayNightIcon()'>
+		<input class='form-check-input d-none' type='checkbox' id='nightModeToggle' onchange='toggleDayNightIcon()'>
 	</div>
 
 	<div id='container' class='container-main d-flex flex-wrap bg-color fade justify-content-center align-items-center'
@@ -37,7 +37,7 @@
 				sans-serif;'>404</h1>
 			<h4 class='text-color animated fadeIn delay-1s mb-4'>Page Not Found</h4>
 			<p class='text-color-dim animated fadeIn delay-2s mb-4'>The page you're looking for doesn't exist.</p>
-			<a href='https://simewu.github.io' class='btn btn-outline-dark animated fadeIn delay-3s'>Go Home</a>
+			<a href='https://simewu.github.io/home' class='btn btn-outline-dark animated fadeIn delay-3s'>Go Home</a>
 		</div>
 	</div>
 
