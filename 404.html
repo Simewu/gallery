@@ -9,8 +9,8 @@
 	<meta name='robots' content='noindex, nofollow'>
 	<title>Page Not Found</title>
 	<link rel='icon' href='https://simewu.github.io/favicon.svg'>
-	<link href='https://simewu.github.io/lib/css/bootstrap.min.css' rel='stylesheet'>
-	<link href='https://simewu.github.io/style.min.css' type='text/css' rel='stylesheet'>
+	<link href='https://simewu.github.io/home/lib/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='https://simewu.github.io/home/style.min.css' type='text/css' rel='stylesheet'>
 	<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'>
 	<link rel='preconnect' href='https://fonts.googleapis.com'>
 	<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
@@ -42,9 +42,9 @@
 		</div>
 	</div>
 
-	<script src='https://simewu.github.io/lib/js/bootstrap.bundle.min.js'></script>
-	<script src='https://simewu.github.io/lib/js/feather.min.js'></script>
-	<script type='text/javascript' src='https://simewu.github.io/script.min.js'></script>
+	<script src='https://simewu.github.io/home/lib/js/bootstrap.bundle.min.js'></script>
+	<script src='https://simewu.github.io/home/lib/js/feather.min.js'></script>
+	<script type='text/javascript' src='https://simewu.github.io/home/script.min.js'></script>
 
 	<script type='text/javascript'>
 		// Adjust the iframe height to fit the window
@@ -71,8 +71,8 @@
 			if (attemptedPath.endsWith('index.html')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 10);
 			if (attemptedPath.endsWith('/')) attemptedPath = attemptedPath.substring(0, attemptedPath.length - 1);
 
-			let redirectPathsHome = ['projects', 'publications', 'resume', 'gallery', 'contact', 'submitted'];
-			let redirectPathsHomeDict = { 'portfolio': 'projects', 'artwork': 'gallery', 'message': 'contact', 'simulator': 'blockchain-simulator' };
+			let redirectPathsHome = ['home/projects', 'home/publications', 'home/resume', 'gallery', 'home/contact', 'home/submitted'];
+			let redirectPathsHomeDict = { 'home/portfolio': 'home/projects', 'artwork': 'gallery', 'home/message': 'home/contact', 'simulator': 'blockchain-simulator' };
 			let redirectPathsLongNameRepos = ['blockchain-simulator', 'BASIC-transpiler', '2048-sampler', 'expression-evaluator'];
 
 			let lowestDist = 512, lowestDistPath = null;

@@ -19,7 +19,7 @@ function makeScriptTag(parent, src, isAsync, onError = null) {
 
 let scriptTag = document.querySelector('script[src="script.min.js"]'), useFullURL = false;
 if (scriptTag == null) {
-	scriptTag = document.querySelector('script[src="https://simewu.github.io/script.min.js"]');
+	scriptTag = document.querySelector('script[src="https://simewu.github.io/home/script.min.js"]');
 	useFullURL = true;
 }
 if (scriptTag == null) scriptTag = document.currentScript;
@@ -273,5 +273,5 @@ function init() {
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
-	makeScriptTag(scriptTag, (useFullURL ? 'https://simewu.github.io/' : '') + 'lib/js/page_counter.min.js', true);
+	makeScriptTag(scriptTag, (useFullURL ? 'https://simewu.github.io/home/' : '') + 'lib/js/page_counter.min.js', true);
 }
