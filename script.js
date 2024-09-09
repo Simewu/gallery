@@ -273,5 +273,5 @@ function init() {
 	let isNight = storedDarkModeState !== null ? JSON.parse(storedDarkModeState) : useDarkModeByDefault;
 	document.getElementById('nightModeToggle').checked = isNight;
 	toggleNightMode(isNight, false, false);
-	makeScriptTag(scriptTag, (useFullURL ? 'https://simewu.github.io/home/' : '') + 'lib/js/page_counter.min.js', true);
+	makeScriptTag(scriptTag, (useFullURL ? 'https://simewu.github.io' : '') + '/home/lib/js/page_counter.min.js', true);
 }
