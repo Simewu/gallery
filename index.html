@@ -12,6 +12,13 @@
 	<link href='lib/css/bootstrap.min.css' rel='stylesheet'>
 	<link href='style.min.css' type='text/css' rel='stylesheet'>
 	<style>
+		/* Make full-resolution images sharp */
+		.img-fluid {
+			image-rendering: pixelated; /* Chrome, Opera, Firefox 49+ */
+			image-rendering: -moz-crisp-edges; /* Firefox */
+			image-rendering: crisp-edges; /* Safari */
+		}
+
 		.gallery {
 			width: 100%;
 		}
